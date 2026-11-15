@@ -1,0 +1,14 @@
+# Секреты
+.env*
+.vercel/
+
+# Личные настройки агентов
+.claude/settings.local.json
+
+# Сгенерированное в design/
+design/concepts/*/out/
+design/prototype/*/build/
+design/prototype/*/site/
+design/tools/*.svg
+__pycache__/
+*.pyc

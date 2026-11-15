@@ -1,0 +1,7 @@
+[{"screen": {"frame": "5:3071", "svgFile": "out/E1.svg", "name": "E1 Датасеты"}},
+ {"screen": {"frame": "5:3072", "svgFile": "out/E2.svg", "name": "E2 Стратегия"}},
+ {"screen": {"frame": "5:3073", "svgFile": "out/E3.svg", "name": "E3 Настройка прогона"}},
+ {"screen": {"frame": "5:3074", "svgFile": "out/E4.svg", "name": "E4 Отчёт прогона"}},
+ {"screen": {"frame": "5:3075", "svgFile": "out/E5.svg", "name": "E5 Сравнение"}},
+ {"screen": {"frame": "5:3076", "svgFile": "out/E6.svg", "name": "E6 Walk-forward"}},
+ {"screen": {"frame": "5:3077", "svgFile": "out/E7.svg", "name": "E7 История прогонов"}}]

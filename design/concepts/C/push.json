@@ -1,0 +1,9 @@
+[
+  {"screen": {"frame": "5:3057", "svgFile": "out/C1.svg", "name": "C1 Данные"}},
+  {"screen": {"frame": "5:3058", "svgFile": "out/C2.svg", "name": "C2 Стратегия"}},
+  {"screen": {"frame": "5:3059", "svgFile": "out/C3.svg", "name": "C3 Издержки и риски"}},
+  {"screen": {"frame": "5:3060", "svgFile": "out/C4.svg", "name": "C4 Отчёт"}},
+  {"screen": {"frame": "5:3061", "svgFile": "out/C5.svg", "name": "C5 Сравнение"}},
+  {"screen": {"frame": "5:3062", "svgFile": "out/C6.svg", "name": "C6 Walk-forward"}},
+  {"screen": {"frame": "5:3063", "svgFile": "out/C7.svg", "name": "C7 Мои исследования"}}
+]

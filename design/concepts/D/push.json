@@ -1,0 +1,51 @@
+[
+ {
+  "screen": {
+   "frame": "5:3064",
+   "svgFile": "out/D1.svg",
+   "name": "D1 Датасеты"
+  }
+ },
+ {
+  "screen": {
+   "frame": "5:3065",
+   "svgFile": "out/D2.svg",
+   "name": "D2 Стратегия"
+  }
+ },
+ {
+  "screen": {
+   "frame": "5:3066",
+   "svgFile": "out/D3.svg",
+   "name": "D3 Настройка"
+  }
+ },
+ {
+  "screen": {
+   "frame": "5:3067",
+   "svgFile": "out/D4.svg",
+   "name": "D4 Отчёт прогона"
+  }
+ },
+ {
+  "screen": {
+   "frame": "5:3068",
+   "svgFile": "out/D5.svg",
+   "name": "D5 Сравнение"
+  }
+ },
+ {
+  "screen": {
+   "frame": "5:3069",
+   "svgFile": "out/D6.svg",
+   "name": "D6 Walk-forward"
+  }
+ },
+ {
+  "screen": {
+   "frame": "5:3070",
+   "svgFile": "out/D7.svg",
+   "name": "D7 История"
+  }
+ }
+]

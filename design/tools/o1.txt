@@ -1,0 +1,7 @@
+[
+ {
+  "tool": "import_svg",
+  "name": "t1",
+  "result": "{\"ok\":true,\"nodeId\":\"5:3081\",\"name\":\"t1\",\"type\":\"FRAME\"}"
+ }
+]

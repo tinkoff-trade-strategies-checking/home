@@ -1,0 +1,39 @@
+{
+	"nodes":[
+		{"id":"0000000000000001","type":"group","x":900,"y":0,"width":1540,"height":1400,"color":"4","label":"Java - один процесс Spring Boot + Spring Modulith"},
+		{"id":"0000000000000002","type":"group","x":2760,"y":660,"width":760,"height":650,"color":"5","label":"Отдельный C++ процесс - C++20 / CMake / vcpkg"},
+		{"id":"0000000000000013","type":"group","x":3620,"y":685,"width":820,"height":300,"color":"2","label":"Подготовка данных вне приложения"},
+		{"id":"0000000000000005","type":"text","text":"# HTTP API\nSpring MVC / REST / SSE\nSpring Security / Validation\n\nКонтроллеры соответствующих модулей","x":960,"y":70,"width":400,"height":200,"color":"4"},
+		{"id":"0000000000000006","type":"text","text":"# identity\nПользователи, роли, права\nSpring Security\n\nСобственные таблицы и репозитории","x":1760,"y":70,"width":580,"height":200,"color":"4"},
+		{"id":"0000000000000004","type":"text","text":"# Caddy\nАвтоматический HTTPS\nСтатика Angular / SPA\nReverse proxy /api\nПроксирование SSE","x":390,"y":70,"width":300,"height":220,"color":"6"},
+		{"id":"0000000000000003","type":"text","text":"# Angular SPA\nAngular + TypeScript\nTaiga UI\nSignals / RxJS?\n\nВыполняется в браузере","x":-380,"y":50,"width":360,"height":260,"color":"6"},
+		{"id":"0000000000000007","type":"text","text":"# sessions\nСессии и команды пользователя\nЗапуск / пауза / шаг / заявка\nФиксация версии стратегии","x":1850,"y":370,"width":400,"height":220,"color":"4"},
+		{"id":"0000000000000012","type":"text","text":"# Как читать схему\nДвусторонняя связь: запрос и ответ по одному каналу.\nRunCompleted: внутреннее событие Java.\nБлок HTTP API объединяет контроллеры для наглядности.\n\nСтартовое окружение: Docker Compose.\nВнешний вход: Caddy; gRPC, PostgreSQL и ClickHouse во внутренней сети.\n\nRabbitMQ: возможное расширение для отдельных batch-воркеров; в стартовый стек не входит.","x":-380,"y":530,"width":760,"height":340,"color":"6"},
+		{"id":"000000000000000a","type":"text","text":"# simulation\nОркестрация и gRPC-клиент\nФоновые задания\nВерсия данных / период / команды → C++\nСохранение событий и снимков\nСвечи не передаются через Java в цикле","x":1850,"y":700,"width":400,"height":250,"color":"4"},
+		{"id":"0000000000000009","type":"text","text":"# marketdata\nКаталог инструментов, периодов и версий\nПроверка наличия истории для сессии\nRead-only доступ к локальному ClickHouse\n\nНе скачивает данные и не передаёт тики C++","x":960,"y":700,"width":400,"height":250,"color":"4"},
+		{"id":"000000000000000b","type":"text","text":"# analysis\nСравнение и отчёты\nОбработка RunCompleted\nЧтение сохранённых результатов","x":1850,"y":1080,"width":400,"height":220,"color":"4"},
+		{"id":"000000000000000c","type":"text","text":"# Границы модулей\nВызовы: публичные Java-интерфейсы.\nУведомления: внутренние события Spring Modulith.\nОдна PostgreSQL, каждый модуль владеет своими таблицами.\nЧужие entity и репозитории не используются напрямую.\nГраницы проверяются в CI: ApplicationModules.verify().","x":960,"y":1080,"width":800,"height":220,"color":"4"},
+		{"id":"0000000000000008","type":"text","text":"# workshop\nСтратегии и неизменяемые версии\nDSL / параметры / публикация\n\nСобственные таблицы и репозитории","x":960,"y":370,"width":400,"height":220,"color":"4"},
+		{"id":"000000000000000d","type":"text","text":"# PostgreSQL\nПользователи / стратегии / сессии\nКоманды / сделки / результаты\nОчередь фоновых заданий\n\nДоступ только через Java\nSpring Data JPA / JDBC / Flyway","x":2620,"y":40,"width":520,"height":260,"color":"3"},
+		{"id":"0000000000000010","type":"text","text":"# Simulation Worker\ngRPC server / Protocol Buffers\nАдаптер чтения локального ClickHouse\nЗадание от Java: версия, период, параметры\nОтвет: события и результат\nБез запросов к MOEX и PostgreSQL","x":2820,"y":720,"width":640,"height":220,"color":"5"},
+		{"id":"0000000000000011","type":"text","text":"# Simulation Core\nНезависимая C++ библиотека\nРыночный цикл выполняется локально\nВремя / индикаторы / исполнение DSL\nЗаявки / риск-проверки / портфель\nCLI для replay и тестов","x":2820,"y":1030,"width":640,"height":240,"color":"5"},
+		{"id":"000000000000000f","type":"text","text":"# Источники истории\nMOEX / MFD / внешние архивы\nОбращается только скрипт подготовки.\nПриложение работает с локальным ClickHouse.","x":3680,"y":725,"width":700,"height":220,"color":"2"},
+		{"id":"000000000000000e","type":"text","text":"# Локальный ClickHouse\nИстория сделок и свечей, MergeTree\nПостоянный Docker volume\nPython: пакетный импорт после проверки\nJava: каталог и покрытие, read-only\nC++: диапазон крупными блоками, read-only","x":3680,"y":1080,"width":700,"height":300,"color":"3"}
+	],
+	"edges":[
+		{"id":"00000000000003e9","fromNode":"0000000000000003","fromSide":"right","toNode":"0000000000000004","toSide":"left","fromEnd":"arrow","label":"HTTPS: REST / SSE / static"},
+		{"id":"00000000000003ea","fromNode":"0000000000000004","fromSide":"right","toNode":"0000000000000005","toSide":"left","fromEnd":"arrow","label":"/api: REST + SSE SSR?"},
+		{"id":"00000000000003eb","fromNode":"0000000000000005","fromSide":"right","toNode":"0000000000000006","toSide":"left","label":"Пользователь и права"},
+		{"id":"00000000000003ec","fromNode":"0000000000000005","fromSide":"bottom","toNode":"0000000000000007","toSide":"top","label":"Команды сессии"},
+		{"id":"00000000000003ed","fromNode":"0000000000000005","fromSide":"bottom","toNode":"0000000000000008","toSide":"top"},
+		{"id":"00000000000003ee","fromNode":"0000000000000007","fromSide":"left","toNode":"0000000000000008","toSide":"right","label":"Получить версию"},
+		{"id":"00000000000003ef","fromNode":"0000000000000007","fromSide":"bottom","toNode":"000000000000000a","toSide":"top","label":"Запустить / продолжить"},
+		{"id":"00000000000003f0","fromNode":"000000000000000a","fromSide":"left","toNode":"0000000000000009","toSide":"right","label":"Зафиксировать готовую версию данных"},
+		{"id":"00000000000003f1","fromNode":"000000000000000a","fromSide":"bottom","toNode":"000000000000000b","toSide":"top","color":"4","label":"RunCompleted"},
+		{"id":"00000000000003f2","fromNode":"0000000000000001","fromSide":"right","toNode":"000000000000000d","toSide":"left","fromEnd":"arrow","label":"SQL: JPA"},
+		{"id":"00000000000003f6","fromNode":"000000000000000a","fromSide":"right","toNode":"0000000000000010","toSide":"left","fromEnd":"arrow","label":"gRPC: задание / команды ↔ события и результаты"},
+		{"id":"00000000000003f7","fromNode":"0000000000000010","fromSide":"bottom","toNode":"0000000000000011","toSide":"top","fromEnd":"arrow","label":"Вызов C++ библиотеки"},
+		{"id":"49e93709a858453e","fromNode":"0000000000000002","fromSide":"right","toNode":"000000000000000e","toSide":"left"},
+		{"id":"0f829046ca27c07e","fromNode":"0000000000000013","fromSide":"bottom","toNode":"000000000000000e","toSide":"top"}
+	]
+}

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "../documentation",
+      "../frontend",
+      "../backend",
+      "../core"
+    ]
+  }
+}

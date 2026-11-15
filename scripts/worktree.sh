@@ -56,7 +56,7 @@ case "$1" in
       git -C "$dir" worktree prune
       # локальные ветки без worktree, чьи ветки на GitHub удалены после слияния
       git -C "$dir" for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads | while read -r b track; do
-        [ "$track" = "[gone]" ] && git -C "$dir" branch -D -q "$b" 2>/dev/null && echo "$r: убрана ветка $b"
+        if [ "$track" = "[gone]" ]; then git -C "$dir" branch -D -q "$b" && echo "$r: убрана ветка $b"; fi
       done
     done
     ;;

@@ -12,3 +12,6 @@ design/prototype/*/site/
 design/tools/*.svg
 __pycache__/
 *.pyc
+
+# Личная устаревшая сводка
+HANDOFF.md

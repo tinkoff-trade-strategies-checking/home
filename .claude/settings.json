@@ -5,6 +5,7 @@
       "../frontend",
       "../backend",
       "../core",
+      "../dsl",
       "../.github"
     ]
   }

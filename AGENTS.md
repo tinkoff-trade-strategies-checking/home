@@ -11,6 +11,7 @@ Home-репозиторий проекта «Т-Инвестиции: трена
 - **backend** (Java, Spring Boot + Spring Modulith; источник OpenAPI и инфраструктуры `deploy/`): `../backend`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/backend.
 - **core** (C++20 ядро симуляции рынка; источник `.proto`): `../core`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/core.
 
+- **dsl** (язык стратегий; спецификация — `../documentation/dsl.md`): `../dsl`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/dsl.
 - **.github** (общие шаблоны issue и PR для всех репозиториев организации): `../.github`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/.github. Шаблоны правятся только здесь, в репозиториях своих не заводим.
 
 `frontend-ai`, `backend-ai`, `core-ai` — приватный архив ранней версии, сгенерированной ИИ. Неактуальны: не клонировать, не брать оттуда код и решения без явной просьбы.
@@ -45,6 +46,7 @@ Home-репозиторий проекта «Т-Инвестиции: трена
 | `workflow.md` | доска, Status / Size / Priority, задача от начала до конца, коммиты и PR, когда обновлять документы |
 | `.agents/skills/` | общие скиллы (Codex, opencode); `.claude/skills/` — переходники для Claude Code |
 | `scripts/clone-repos.sh` | клонирует недостающие репозитории рядом с `home` |
+| `scripts/worktree.sh` | worktree на задачу: `start <repo> <тип> <N>`, `list`, `clean` |
 | `design/` | генераторы hi-fi макетов для Figma (свой `AGENTS.md`) |
 | `context/` | исходники: ТЗ, презентация требований, схема стека |
 
@@ -54,7 +56,7 @@ Home-репозиторий проекта «Т-Инвестиции: трена
 
 Агент запущен в `home`, а пишет в `../<repo>`:
 - Claude Code — `.claude/settings.json` добавляет соседние папки в `additionalDirectories` (после доверия папке);
-- Codex — запускать с `--add-dir ../documentation --add-dir ../frontend --add-dir ../backend --add-dir ../core --add-dir ../.github`;
+- Codex — запускать с `--add-dir ../documentation --add-dir ../frontend --add-dir ../backend --add-dir ../core --add-dir ../dsl --add-dir ../.github`;
 - opencode — доступ к внешним папкам разрешён по умолчанию.
 
 `AGENTS.md` соседнего репозитория не подгружается сам — открой его перед изменениями.

@@ -4,7 +4,7 @@
 set -e
 
 ORG=tinkoff-trade-strategies-checking
-REPOS="documentation frontend backend core"
+REPOS="documentation frontend backend core .github"
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 
 for r in $REPOS; do

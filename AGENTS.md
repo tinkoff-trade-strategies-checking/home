@@ -11,6 +11,8 @@ Home-репозиторий проекта «Т-Инвестиции: трена
 - **backend** (Java, Spring Boot + Spring Modulith; источник OpenAPI и инфраструктуры `deploy/`): `../backend`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/backend.
 - **core** (C++20 ядро симуляции рынка; источник `.proto`): `../core`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/core.
 
+- **.github** (общие шаблоны issue и PR для всех репозиториев организации): `../.github`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/.github. Шаблоны правятся только здесь, в репозиториях своих не заводим.
+
 `frontend-ai`, `backend-ai`, `core-ai` — приватный архив ранней версии, сгенерированной ИИ. Неактуальны: не клонировать, не брать оттуда код и решения без явной просьбы.
 
 ## Как работать
@@ -52,7 +54,7 @@ Home-репозиторий проекта «Т-Инвестиции: трена
 
 Агент запущен в `home`, а пишет в `../<repo>`:
 - Claude Code — `.claude/settings.json` добавляет соседние папки в `additionalDirectories` (после доверия папке);
-- Codex — запускать с `--add-dir ../documentation --add-dir ../frontend --add-dir ../backend --add-dir ../core`;
+- Codex — запускать с `--add-dir ../documentation --add-dir ../frontend --add-dir ../backend --add-dir ../core --add-dir ../.github`;
 - opencode — доступ к внешним папкам разрешён по умолчанию.
 
 `AGENTS.md` соседнего репозитория не подгружается сам — открой его перед изменениями.

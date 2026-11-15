@@ -2,7 +2,8 @@
   "$schema": "https://opencode.ai/config.json",
   "permission": {
     "skill": {
-      "miro-board-claude": "deny"
+      "miro-board-claude": "deny",
+      "context-audit-claude": "deny"
     }
   }
 }

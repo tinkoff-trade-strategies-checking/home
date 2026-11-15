@@ -4,7 +4,8 @@
       "../documentation",
       "../frontend",
       "../backend",
-      "../core"
+      "../core",
+      "../.github"
     ]
   }
 }

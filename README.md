@@ -19,6 +19,7 @@ tinkoff/
   frontend/
   backend/
   core/
+  .github/         ← общие шаблоны issue и PR
 ```
 
 ## Запуск агентов
@@ -26,7 +27,7 @@ tinkoff/
 | Агент | Команда из `home` |
 |---|---|
 | Claude Code | `claude` — соседние папки подключаются из `.claude/settings.json` после доверия папке |
-| Codex | `codex --add-dir ../documentation --add-dir ../frontend --add-dir ../backend --add-dir ../core` |
+| Codex | `codex --add-dir ../documentation --add-dir ../frontend --add-dir ../backend --add-dir ../core --add-dir ../.github` |
 | opencode | `opencode` |
 
 Работа над одним репозиторием без кросс-репозиторного контекста — можно запускать агента и прямо в нём: его `AGENTS.md` подгрузится сам.

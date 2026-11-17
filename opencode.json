@@ -6,7 +6,8 @@
       "context-audit-claude": "deny",
       "verify-claude": "deny",
       "pr-review-claude": "deny",
-      "review-eval-claude": "deny"
+      "review-eval-claude": "deny",
+      "next-claude": "deny"
     }
   }
 }

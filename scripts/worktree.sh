@@ -9,7 +9,8 @@
 # Типы: feat, fix, docs, chore.
 set -e
 
-ROOT=$(cd "$(dirname "$0")/../.." && pwd)
+# Папка с репозиториями — родитель основного клона home (и при запуске из worktree home).
+ROOT=$(dirname "$(dirname "$(git -C "$(dirname "$0")" rev-parse --path-format=absolute --git-common-dir)")")
 REPOS="documentation frontend backend core dsl .github home"
 
 exclude_worktrees() {

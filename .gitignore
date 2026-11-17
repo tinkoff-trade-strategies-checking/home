@@ -4,6 +4,8 @@
 
 # Личные настройки агентов
 .claude/settings.local.json
+.claude/verify-gate.mode
+.claude/verify-gate.log
 
 # Сгенерированное в design/
 design/concepts/*/out/

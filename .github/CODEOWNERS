@@ -1,0 +1,6 @@
+# Владельцы проверок home: правила ревью, скиллы проверки, барьер.
+/review/                       @Denmurzik
+/.agents/skills/pr-review/     @Denmurzik
+/.agents/skills/review-eval/   @Denmurzik
+/.agents/skills/verify/        @Denmurzik
+/.claude/hooks/                @Denmurzik

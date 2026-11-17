@@ -5,11 +5,14 @@ set -e
 
 ORG=tinkoff-trade-strategies-checking
 REPOS="documentation frontend backend core dsl .github"
-ROOT=$(cd "$(dirname "$0")/../.." && pwd)
+# Папка с репозиториями — родитель основного клона home (и при запуске из worktree home).
+ROOT=$(dirname "$(dirname "$(git -C "$(dirname "$0")" rev-parse --path-format=absolute --git-common-dir)")")
 
 for r in $REPOS; do
   dir="$ROOT/$r"
-  if [ -d "$dir/.git" ]; then
+  if [ -d "$dir/.git" ] && [ -z "$(git -C "$dir" ls-remote --heads origin 2>/dev/null)" ]; then
+    echo "$r: на GitHub пока пусто, подтягивать нечего"
+  elif [ -d "$dir/.git" ]; then
     echo "$r: pull"
     git -C "$dir" pull --ff-only || echo "$r: pull не удался, разберись вручную"
   else

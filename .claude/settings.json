@@ -8,5 +8,20 @@
       "../dsl",
       "../.github"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(gh pr create*)",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/.claude/hooks/verify_gate.py\" 2>/dev/null || python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/verify_gate.py\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
   }
 }

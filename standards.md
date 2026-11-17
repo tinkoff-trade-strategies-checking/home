@@ -38,8 +38,9 @@
 ## Стиль C++ (`core`, `dsl`)
 
 - Стиль LLVM: `clang-format` с `BasedOnStyle: LLVM`, проверка формата в CI.
-- Имена по LLVM: типы, переменные и поля — `PascalCase`; функции — `camelCase`; перечисления — `PascalCase`, значения — с префиксом по типу; файлы — `snake_case`. Проверяет `clang-tidy` (`readability-identifier-naming`), сначала в режиме наблюдения.
-- Новый код — сразу по LLVM; старый код `core` переименовывается при правке файла, не отдельными массовыми PR.
+- Имена по LLVM: типы, переменные, параметры и поля (без суффикса `_`) — `PascalCase`; функции и методы — `camelCase`; перечисления и их значения — `PascalCase` (только `enum class`, без префикса); константы — `k` + `PascalCase`; пространства имён — `lower_case`; файлы — `snake_case`. Проверяет `clang-tidy` (`readability-identifier-naming`) в CI, нарушение — ошибка. Имя, обязанное совпадать с внешним API (protobuf, GoogleTest), — с `// NOLINT(readability-identifier-naming)` и причиной.
+- Поле не называется как его тип (`Timeline TimelineRef`, а не `Timeline Timeline`), параметр — не как поле, которое он инициализирует: при именах в `PascalCase` такое слияние меняет смысл молча. От этого страхует `-Wshadow` (см. `core/AGENTS.md`).
+- `core` переведён на LLVM целиком (core#10); новый код в `core` и `dsl` — сразу по этим правилам.
 - C++20; деньги — только `core::Decimal`, без `float`/`double` (INV-6); никаких часов, случайности без seed и обхода hash-контейнеров в расчёте (INV-4).
 
 ## Стековые стандарты

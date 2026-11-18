@@ -66,6 +66,7 @@ Home-репозиторий проекта «Т-Инвестиции: трена
 Агент запущен в `home`, а пишет в `../<repo>`:
 - Claude Code — `.claude/settings.json` добавляет соседние папки в `additionalDirectories` (после доверия папке);
 - Codex — запускать с `--add-dir ../documentation --add-dir ../frontend --add-dir ../backend --add-dir ../core --add-dir ../dsl --add-dir ../.github`;
+- Antigravity (`agy`) — запускать с `--add-dir ../documentation --add-dir ../frontend --add-dir ../backend --add-dir ../core --add-dir ../dsl --add-dir ../.github`;
 - opencode — доступ к внешним папкам разрешён по умолчанию.
 
 `AGENTS.md` соседнего репозитория не подгружается сам — открой его перед изменениями.

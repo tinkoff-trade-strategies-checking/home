@@ -8,7 +8,7 @@ Home-репозиторий проекта «Т-Инвестиции: трена
 
 - **documentation** (продуктовая документация: требования, инварианты, юзкейсы, DSL, архитектура и архитектурные решения, статус): `../documentation`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/documentation. Источник правды по продукту; карта документов — `../documentation/README.md`.
 - **frontend** (Angular + Taiga UI): `../frontend`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/frontend.
-- **backend** (Java, Spring Boot + Spring Modulith; источник OpenAPI и инфраструктуры `deploy/`): `../backend`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/backend.
+- **backend** (Java, Spring Boot + Spring Modulith; источник OpenAPI и инфраструктуры `deploy/` — **планируется**: пока в репозитории только README, каркас — backend#1): `../backend`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/backend.
 - **core** (C++20 ядро симуляции рынка; источник `.proto`): `../core`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/core.
 
 - **dsl** (язык стратегий; спецификация — `../documentation/dsl.md`): `../dsl`. Клонировать из https://github.com/tinkoff-trade-strategies-checking/dsl.

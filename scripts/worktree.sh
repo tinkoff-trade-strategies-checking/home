@@ -33,7 +33,7 @@ case "$1" in
     if git -C "$dir" show-ref -q --verify "refs/remotes/origin/$branch"; then
       git -C "$dir" worktree add -q "$wt" -B "$branch" "origin/$branch"   # продолжить начатую ветку
     else
-      git -C "$dir" worktree add -q "$wt" -b "$branch" "$base"
+      git -C "$dir" worktree add -q --no-track "$wt" -b "$branch" "$base"
     fi
     echo "$wt  ($branch)"
     ;;
@@ -48,8 +48,10 @@ case "$1" in
         case "$wt" in */.worktrees/*) ;; *) continue;; esac
         b=${ref#refs/heads/}
         # ветка была запушена (есть upstream), а на GitHub её уже нет — PR влит, ветка удалена
+        # upstream должен быть своей же веткой: ветка, созданная от origin/main, отслеживает main и не считается запушенной
         pushed=$(git -C "$dir" config "branch.$b.remote" || true)
-        if [ -n "$pushed" ] && ! git -C "$dir" show-ref -q --verify "refs/remotes/origin/$b"; then
+        merge=$(git -C "$dir" config "branch.$b.merge" || true)
+        if [ -n "$pushed" ] && [ "$merge" = "refs/heads/$b" ] && ! git -C "$dir" show-ref -q --verify "refs/remotes/origin/$b"; then
           if [ -n "$(git -C "$wt" status --porcelain)" ]; then echo "$r $b: есть незакоммиченное, пропускаю"; continue; fi
           git -C "$dir" worktree remove "$wt" && git -C "$dir" branch -D -q "$b" && echo "$r: убран $b"
         fi

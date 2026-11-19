@@ -24,7 +24,8 @@ ROOT = os.path.dirname(HOME)
 TODAY = datetime.date.today()
 
 # Пороги
-STALE_IN_PROGRESS_DAYS = 7
+STALE_IN_PROGRESS_DAYS = 3
+STALE_READY_ASSIGNED_DAYS = 7
 OLD_PR_DAYS = 3
 EVAL_EVERY_DAYS = 30
 MIN_CODE_FILES = 5  # меньше — репозиторий считается «ещё без кода»
@@ -131,9 +132,67 @@ BOARD_QUERY = """
 query($org:String!,$num:Int!,$after:String){organization(login:$org){projectV2(number:$num){
  items(first:100,after:$after){pageInfo{hasNextPage endCursor} nodes{
   fieldValues(first:10){nodes{... on ProjectV2ItemFieldSingleSelectValue{name field{... on ProjectV2SingleSelectField{name}}}}}
-  content{... on Issue{number state title url updatedAt repository{name} assignees(first:3){nodes{login}}
+  content{... on Issue{number state title url createdAt updatedAt repository{name} assignees(first:3){nodes{login}}
    issueFieldValues(first:5){nodes{... on IssueFieldSingleSelectValue{name field{... on IssueFieldSingleSelect{name}}}}}}}}}}}}
 """
+
+MOVEMENT_QUERY = """
+query($org:String!,$repo:String!,$num:Int!,$branchQuery:String!){
+ repository(owner:$org,name:$repo){
+  issue(number:$num){
+   createdAt
+   comments(last:1){nodes{createdAt updatedAt}}
+   linkedBranches(first:10){nodes{ref{target{... on Commit{committedDate}}}}}
+   timelineItems(last:50,itemTypes:[CROSS_REFERENCED_EVENT,CONNECTED_EVENT]){
+    nodes{
+     ... on CrossReferencedEvent{source{... on PullRequest{commits(last:1){nodes{commit{committedDate}}}}}}
+     ... on ConnectedEvent{subject{... on PullRequest{commits(last:1){nodes{commit{committedDate}}}}}}
+    }
+   }
+  }
+  refs(refPrefix:"refs/heads/",query:$branchQuery,first:20){
+   nodes{name target{... on Commit{committedDate}}}
+  }
+ }
+}
+"""
+
+
+def last_movement(repo, number, fallback_iso):
+    """Последнее движение по задаче: коммит в связанном PR/ветке или комментарий в issue."""
+    try:
+        data = gh_json(
+            "api", "graphql", "-f", f"query={MOVEMENT_QUERY}",
+            "-f", f"org={ORG}", "-f", f"repo={repo}", "-F", f"num={number}",
+            "-f", f"branchQuery=/{number}",
+        )["data"]["repository"]
+    except (RuntimeError, KeyError, TypeError):
+        return fallback_iso
+    if not data or not data.get("issue"):
+        return fallback_iso
+    issue = data["issue"]
+    dates = []
+    for c in (issue.get("comments") or {}).get("nodes") or []:
+        for key in ("createdAt", "updatedAt"):
+            if c.get(key):
+                dates.append(c[key])
+    for lb in (issue.get("linkedBranches") or {}).get("nodes") or []:
+        d = (((lb or {}).get("ref") or {}).get("target") or {}).get("committedDate")
+        if d:
+            dates.append(d)
+    for ev in (issue.get("timelineItems") or {}).get("nodes") or []:
+        pr = (ev or {}).get("source") or (ev or {}).get("subject") or {}
+        for cn in (pr.get("commits") or {}).get("nodes") or []:
+            d = ((cn or {}).get("commit") or {}).get("committedDate")
+            if d:
+                dates.append(d)
+    branch_re = re.compile(rf"^(feat|fix|docs|chore)/{number}(?:-|$)")
+    for ref in (data.get("refs") or {}).get("nodes") or []:
+        if ref and branch_re.match(ref.get("name") or ""):
+            d = (ref.get("target") or {}).get("committedDate")
+            if d:
+                dates.append(d)
+    return max(dates) if dates else (issue.get("createdAt") or fallback_iso)
 
 
 def board_items():
@@ -150,8 +209,10 @@ def board_items():
             fields = {v["field"]["name"]: v["name"] for v in node["fieldValues"]["nodes"] if v.get("name")}
             issue_fields = {v["field"]["name"]: v["name"] for v in content["issueFieldValues"]["nodes"] if v.get("name")}
             items.append({
+                "repo": content["repository"]["name"], "number": content["number"],
                 "ref": f"{content['repository']['name']}#{content['number']}",
-                "title": content["title"], "url": content["url"], "updated": content["updatedAt"],
+                "title": content["title"], "url": content["url"],
+                "created": content["createdAt"], "updated": content["updatedAt"],
                 "status": fields.get("Status", ""), "size": fields.get("Size", ""),
                 "priority": issue_fields.get("Priority", ""),
                 "assignees": [a["login"] for a in content["assignees"]["nodes"]],
@@ -168,9 +229,16 @@ def check_board():
         if missing:
             add("gap", it["ref"], f"на доске нет полей: {', '.join(missing)} — «{it['title']}»",
                 "проставить по workflow.md, раздел «Доска»")
-        if it["status"] == "In progress" and days_since(it["updated"]) > STALE_IN_PROGRESS_DAYS:
-            add("info", it["ref"], f"In progress без движения {days_since(it['updated'])} дн. — «{it['title']}»",
-                "спросить исполнителя или оставить в issue комментарий о состоянии")
+        if it["status"] == "In progress":
+            age = days_since(last_movement(it["repo"], it["number"], it["created"]))
+            if age > STALE_IN_PROGRESS_DAYS:
+                add("block", it["ref"], f"In progress без движения {age} дн. — «{it['title']}»",
+                    "написать вопрос исполнителю в issue (не чаще раза в неделю), не переназначать")
+        elif it["status"] == "Ready" and it["assignees"]:
+            age = days_since(last_movement(it["repo"], it["number"], it["created"]))
+            if age > STALE_READY_ASSIGNED_DAYS:
+                add("block", it["ref"], f"Ready с исполнителем без движения {age} дн. — «{it['title']}»",
+                    "написать вопрос исполнителю в issue (не чаще раза в неделю), не переназначать")
         if it["status"] == "In progress" and not it["assignees"]:
             add("gap", it["ref"], "In progress без исполнителя", "назначить или вернуть в Ready")
     return items
